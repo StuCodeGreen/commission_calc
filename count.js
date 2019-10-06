@@ -92,31 +92,33 @@ function countCommision(result){
 	for(let i = 0; i< result.length-1; i++){
 		let totalsum = 0;
 			for( let si = 0; si< result[i].date.length-1; si++){
-				// if(result[i].type == "cash_out" && result[i].user_type === "natural"){
-				// 	if(moment(result[i].date[si]).isSame(result[i].date[si+1], 'week') || moment(result[i].date[si]).isSame(result[i].date[si-1], 'week')){
-				// 		totalsum += result[i].operation[si]+ result[i].operation[si+1];
-				// 		let comissionCost = legalContent.percents;
-				// 		totalsum < 1000  ? comissionCost = 0 : "";
-				// 		currentSum = result[i].operation[si];
-				// 		currentSum > 1000 ? currentSum= currentSum - 1000 : '';
-				// 		let comission = countCom(currentSum,comissionCost);
-				// 		// console.log(comission)
-				// 		if(!moment(result[i].date[si]).isSame(result[i].date[si+1], 'week')){
-				// 			totalsum = 0;
-				// 			totalsum += result[i].operation[si]+ result[i].operation[si+1];
-				// 		let comissionCost = legalContent.percents;
-				// 		totalsum < 1000  ? comissionCost = 0 : "";
-				// 		currentSum = result[i].operation[si];
-				// 		currentSum > 1000 ? currentSum= currentSum - 1000 : '';
-				// 		let comission = countCom(currentSum,comissionCost);
-				// 		// console.log(comission)
-				// 		}
-				// 	// console.log(totalsum)
+				if(result[i].type == "cash_out" && result[i].user_type === "natural"){
+					if(moment(result[i].date[si]).isSame(result[i].date[si+1], 'week') || moment(result[i].date[si]).isSame(result[i].date[si-1], 'week')){
+						totalsum += result[i].operation[si];
+						let comissionCost = legalContent.percents;
+						totalsum < 1000  ? comissionCost = 0 : "";
+						currentSum = result[i].operation[si];
+						currentSum > 1000 ? currentSum= currentSum - 1000 : '';
+						let comission = countCom(currentSum,comissionCost);
+						// console.log(comission)
+						console.log(`${comission} ${result[i].date[si]} ${currentSum} ${totalsum}` )
+						if(!moment(result[i].date[si]).isSame(result[i].date[si+1], 'week')){
+							totalsum = 0;
+							totalsum += result[i].operation[si+1];
+						let comissionCost = legalContent.percents;
+						totalsum < 1000  ? comissionCost = 0 : "";
+						currentSum = result[i].operation[si+1];
+						currentSum > 1000 ? currentSum= currentSum - 1000 : '';
+						let comission = countCom(currentSum,comissionCost);
+						console.log(`${result[i].user_type } ${comission} ${result[i].date[si+1]} ${currentSum} ${totalsum}` )
+						// console.log(comission)
+						}
+					// console.log(totalsum)
 	
 
 				// console.log(result[i].user_type)
-				// 	}
-				// }	
+					}
+				}	
 				// else if (result[i].type === "cash_in" && result[i].user_type === "natural"){
 				// 	let comission = countCom(result[i].operation.amount,cashInContent.percents);
 				// 	comission > cashInContent.max.amount ? comission = 5 : comission;
@@ -125,26 +127,40 @@ function countCommision(result){
 				// 	console.log(result[i]);
 					
 				// } 
-				 if(result[i].user_type == 'juridical'){
+				//  if(result[i].user_type == 'juridical'){
 					// let comission = countCom(content.operation.amount,legalContent.percents);
 					// comission < legalContent.min.amount ? comission = 0.5 : comission;
 					// console.log(comission)
-					console.log("hello");
+					// console.log("hello");
 					// console.log(result[i])
-				}		
-				 if (result[i].type === "cash_in"){
-					let comission = councontenttCom(content.operation.amount,legalContent.percents);
-					comission > legalConcontenttent.min.amount ? comission = 5 : comission;
-					console.log("fas")
+				// }		
+				//  if (result[i].type === "cash_in"){
+				// 	let comission = councontenttCom(content.operation.amount,legalContent.percents);
+				// 	comission > legalConcontenttent.min.amount ? comission = 5 : comission;
+				// 	console.log("fas")
 					
-				}
+				// }
 		
+
+				
+
 			}
 			if(result[i].user_type === 'juridical' && result[i].type === "cash_out"){
-					let comission = countCom(result[i].operation,legalContent.percents);
-					comission < legalContent.min.amount ? comission = 0.5 : comission;
-					console.log(comission)
-			}
+				let comission = countCom(result[i].operation,legalContent.percents);
+				comission < legalContent.min.amount ? comission = 0.5 : comission;
+				console.log(`${comission} ${result[i].operation}` )
+		}
+		if (result[i].type === "cash_in"){
+			let comission = countCom(result[i].operation,cashInContent.percents);
+			comission > cashInContent.max.amount ? comission = 5 : comission;
+			console.log(`${comission} ` )
+			
+		}
+			// if(result[i].user_type === 'juridical' && result[i].type === "cash_out"){
+			// 		let comission = countCom(result[i].operation,legalContent.percents);
+			// 		comission < legalContent.min.amount ? comission = 0.5 : comission;
+			// 		console.log(comission)
+			// }
 	
 			// if(moment(result[i].date).isSame(result[i].date, 'week')){
 				// console.log(result[i])
