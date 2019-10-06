@@ -64,20 +64,28 @@ function countCommision(result) {
 					moment(result[i].date[si]).isSame(result[i].date[si], 'week')
 					// moment(result[i].date).isSame(result[i+1].date)
         ) {
-					if(!moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')){
-						totalsum = 0;
-					}  
+			 
           // console.log(result[i].user_id + "aaaaaaaaaaaaaaaa" +result[i].date[si+1]);
-          totalsum += result[i].operation[si];
 					let comissionCost = naturalContent.percents;
 					// console.log(totalsum + "aaaaaaaaaaaaaa");
-          totalsum < 1000 ? (comissionCost = 0) : comissionCost;
+          // totalsum < 1000 ? (comissionCost = 0) : comissionCost;
           currentSum = result[i].operation[si];
-          currentSum > 1000 ? (currentSum = currentSum - 1000) : '';
+					// currentSum > 1000 ? (currentSum = currentSum - 1000) : '';
+					// totalsum > 1000 ? (currentSum = currentSum) : '';
+				if(currentSum >= 1000 && totalsum < 1000){
+						currentSum = currentSum - 1000;
+						
+				} else if(currentSum < 1000 && totalsum < 1000){
+					comissionCost = 0;
+				}
+			
           let comission = countCom(currentSum, comissionCost);
-          console.log(comission);
+					console.log(comission + " " +totalsum);
+					totalsum += result[i].operation[si];
 					// console.log(`${comission} ${result[i].date[si]} ${currentSum} ${totalsum}` )
-				    
+					if(!moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')){
+						totalsum = 0;
+					} 
 				} 
 				//    else 
 				// 	// !moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')
