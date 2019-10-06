@@ -61,35 +61,38 @@ function countCommision(result) {
 				// console.log(result[i].user_id + "aaaaaaaaaaaaaaaa" +result[i].date[si]);
         if (
           moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week') ||
-					moment(result[i].date[si]).isSame(result[i].date[si], 'week') ||
-					moment(result[i].date).isSame(result[i+1].date)
+					moment(result[i].date[si]).isSame(result[i].date[si], 'week')
+					// moment(result[i].date).isSame(result[i+1].date)
         ) {
+					if(!moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')){
+						totalsum = 0;
+					}  
           // console.log(result[i].user_id + "aaaaaaaaaaaaaaaa" +result[i].date[si+1]);
           totalsum += result[i].operation[si];
-          let comissionCost = legalContent.percents;
-          totalsum <= 1000 ? (comissionCost = 0) : '';
+					let comissionCost = naturalContent.percents;
+					// console.log(totalsum + "aaaaaaaaaaaaaa");
+          totalsum < 1000 ? (comissionCost = 0) : comissionCost;
           currentSum = result[i].operation[si];
           currentSum > 1000 ? (currentSum = currentSum - 1000) : '';
           let comission = countCom(currentSum, comissionCost);
           console.log(comission);
 					// console.log(`${comission} ${result[i].date[si]} ${currentSum} ${totalsum}` )
-					if(!moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')){
-						totalsum = 0;
-					}      
-        }    else 
-					// !moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')
-				 {
-					totalsum = 0;
-					totalsum += result[i].operation[si + 1];
-					let comissionCost = legalContent.percents;
-					totalsum <= 1000 ? (comissionCost = 0) : '';
-					currentSum = result[i].operation[si + 1];
-					currentSum > 1000 ? (currentSum = currentSum - 1000) : '';
-					let comission = countCom(currentSum, comissionCost);
-					console.log(comission);
-					// console.log(`${result[i].user_type } ${comission} ${result[i].date[si+1]} ${currentSum} ${totalsum}` )
-					// console.log(comission)
-				}
+				    
+				} 
+				//    else 
+				// 	// !moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')
+				//  {
+				// 	totalsum = 0;
+				// 	totalsum += result[i].operation[si + 1];
+				// 	let comissionCost = naturalContent.percents;
+				// 	totalsum < 1000 ? (comissionCost = 0) : '';
+				// 	currentSum = result[i].operation[si + 1];
+				// 	currentSum > 1000 ? (currentSum = currentSum - 1000) : '';
+				// 	let comission = countCom(currentSum, comissionCost);
+				// 	console.log(comission);
+				// 	// console.log(`${result[i].user_type } ${comission} ${result[i].date[si+1]} ${currentSum} ${totalsum}` )
+				// 	// console.log(comission)
+				// }
       }
 		}
 		
