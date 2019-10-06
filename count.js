@@ -15,7 +15,6 @@ var inputContent = JSON.parse(inputData);
 var cashInContent = JSON.parse(cashIn);
 var legalContent = JSON.parse(cashOutLegal);
 var naturalContent = JSON.parse(cashOutNatural);
-// Get Value from JSON
 
 // round number
 function roundUp(num, precision) {
@@ -44,13 +43,13 @@ const sortedData = src.reduce(
         operation: [operation.amount],
         date: [date]
       });
-		}
-	
+    }
+
     return acc;
   },
   []
 );
-console.log(sortedData)
+// console.log(sortedData);
 
 function countCommision(result) {
   for (let i = 0; i < result.length; i++) {
@@ -58,65 +57,45 @@ function countCommision(result) {
     let totalsum = 0;
     for (let si = 0; si < result[i].date.length; si++) {
       if (result[i].type == 'cash_out' && result[i].user_type === 'natural') {
-				// console.log(result[i].user_id + "aaaaaaaaaaaaaaaa" +result[i].date[si]);
         if (
           moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week') ||
-					moment(result[i].date[si]).isSame(result[i].date[si], 'week')
-					// moment(result[i].date).isSame(result[i+1].date)
+          moment(result[i].date[si]).isSame(result[i].date[si], 'week')
+          // moment(result[i].date).isSame(result[i+1].date)
         ) {
-			 
-          // console.log(result[i].user_id + "aaaaaaaaaaaaaaaa" +result[i].date[si+1]);
-					let comissionCost = naturalContent.percents;
-					// console.log(totalsum + "aaaaaaaaaaaaaa");
-          // totalsum < 1000 ? (comissionCost = 0) : comissionCost;
+          let comissionCost = naturalContent.percents;
           currentSum = result[i].operation[si];
-					// currentSum > 1000 ? (currentSum = currentSum - 1000) : '';
-					// totalsum > 1000 ? (currentSum = currentSum) : '';
-				if(currentSum >= 1000 && totalsum < 1000){
-						currentSum = currentSum - 1000;
-						
-				} else if(currentSum < 1000 && totalsum < 1000){
-					comissionCost = 0;
-				}
-			
+          if (currentSum >= 1000 && totalsum < 1000) {
+            currentSum = currentSum - 1000;
+          } else if (currentSum < 1000 && totalsum < 1000) {
+            comissionCost = 0;
+          }
+
           let comission = countCom(currentSum, comissionCost);
-					console.log(comission + " " +totalsum);
-					totalsum += result[i].operation[si];
-					// console.log(`${comission} ${result[i].date[si]} ${currentSum} ${totalsum}` )
-					if(!moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')){
-						totalsum = 0;
-					} 
-				} 
-				//    else 
-				// 	// !moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')
-				//  {
-				// 	totalsum = 0;
-				// 	totalsum += result[i].operation[si + 1];
-				// 	let comissionCost = naturalContent.percents;
-				// 	totalsum < 1000 ? (comissionCost = 0) : '';
-				// 	currentSum = result[i].operation[si + 1];
-				// 	currentSum > 1000 ? (currentSum = currentSum - 1000) : '';
-				// 	let comission = countCom(currentSum, comissionCost);
-				// 	console.log(comission);
-				// 	// console.log(`${result[i].user_type } ${comission} ${result[i].date[si+1]} ${currentSum} ${totalsum}` )
-				// 	// console.log(comission)
-				// }
+
+          totalsum += result[i].operation[si] + result[i].operation[si + 1];
+          console.log(comission);
+          // console.log(`${comission} ${result[i].date[si]} ${currentSum} ${totalsum}` )
+          if (
+            !moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')
+          ) {
+            totalsum = 0;
+          }
+        }
       }
-		}
-		
+    }
+
     if (result[i].user_type === 'juridical' && result[i].type === 'cash_out') {
       let comission = countCom(result[i].operation, legalContent.percents);
       comission < legalContent.min.amount ? (comission = 0.5) : comission;
       console.log(comission);
       // console.log(`${comission} ${result[i].operation}` )
-		}
-		   if (result[i].type === 'cash_in') {
+    }
+    if (result[i].type === 'cash_in') {
       let comission = countCom(result[i].operation, cashInContent.percents);
       comission > cashInContent.max.amount ? (comission = 5) : comission;
       console.log(comission);
       // console.log(`${comission} ` )
     }
- 
   }
 }
 countCommision(sortedData);
