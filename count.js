@@ -49,9 +49,9 @@ const sortedData = src.reduce(
   },
   []
 );
-// console.log(sortedData);
+console.log(sortedData);
 
-function countCommision(result) {
+const countComission = (result) => {
   for (let i = 0; i < result.length; i++) {
     // console.log(result[i])
     let totalsum = 0;
@@ -98,4 +98,6 @@ function countCommision(result) {
     }
   }
 }
-countCommision(sortedData);
+countComission(sortedData);
+
+module.exports = countComission;
