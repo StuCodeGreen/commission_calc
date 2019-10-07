@@ -62,7 +62,6 @@ const countComission =  {
 					if (
 						moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week') ||
 						moment(result[i].date[si]).isSame(result[i].date[si], 'week')
-						// moment(result[i].date).isSame(result[i+1].date)
 					) {
 						let comissionCost = naturalContent.percents;
 						currentSum = result[i].operation[si];
