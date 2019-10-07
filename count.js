@@ -49,6 +49,7 @@ const sortedData = src.reduce(
   },
   []
 );
+// Console log sorted data
 // console.log(sortedData);
 
 const countComission =  {
