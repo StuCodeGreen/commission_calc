@@ -26,9 +26,9 @@ function countCom(num, per) {
   let output = (num / 100) * per;
   return roundUp(output, 1);
 }
-function sortData(data){
+
 // this will check for same ids and will create new array
-const src = JSON.parse(JSON.stringify(data));
+const src = JSON.parse(JSON.stringify(inputContent));
 const sortedData = src.reduce(
   (acc, { user_id, user_type, type, operation, date }) => {
     const existing = acc.find(i => i.user_id === user_id && i.type === type);
@@ -49,14 +49,10 @@ const sortedData = src.reduce(
   },
   []
 );
-return sortedData;
-}
-
-console.log(sortData(inputContent));
+// console.log(sortedData);
 
 const countComission =  {
 	count: (result) => {
-		result = sortData(result)
 		for (let i = 0; i < result.length; i++) {
 			// console.log(result[i])
 			let totalsum = 0;
@@ -78,14 +74,14 @@ const countComission =  {
 						let comission = countCom(currentSum, comissionCost);
 	
 						totalsum += result[i].operation[si] + result[i].operation[si + 1];
-						// console.log(comission);
+						console.log(comission);
 						// console.log(`${comission} ${result[i].date[si]} ${currentSum} ${totalsum}` )
 						if (
 							!moment(result[i].date[si]).isSame(result[i].date[si + 1], 'week')
 						) {
 							totalsum = 0;
 						}
-						return comission;
+						// return comission;
 					}
 				}
 			}
@@ -94,19 +90,19 @@ const countComission =  {
 				let comission = countCom(result[i].operation, legalContent.percents);
 				comission < legalContent.min.amount ? (comission = 0.5) : comission;
 				console.log(comission);
-				return comission;
+				// return comission;
 				// console.log(`${comission} ${result[i].operation}` )
 			}
 			if (result[i].type === 'cash_in') {
 				let comission = countCom(result[i].operation, cashInContent.percents);
 				comission > cashInContent.max.amount ? (comission = 5) : comission;
 				console.log(comission);
-				return comission;
+				// return comission;
 				// console.log(`${comission} ` )
 			}
 		}
 	}
 }
-// countComission.count(inputContent);
+countComission.count(sortedData);
 
 module.exports = countComission;
