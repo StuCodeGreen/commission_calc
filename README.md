@@ -1,7 +1,7 @@
 Install npm packages:
 sudo npm install
 
-To check commisions of input.json file: 
+To check commissions of input.json file: 
 node count.js
 
 To run test: 
