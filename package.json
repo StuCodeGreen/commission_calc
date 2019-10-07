@@ -1,5 +1,11 @@
 {
-  "name": "commission_calc",
+	"name": "commission_calc",
+	"jest": {
+		"verbose": true,
+		"transformIgnorePatterns": [
+			"<rootDir>/bower_components/", "<rootDir>/node_modules/"
+		]
+  },
   "version": "1.0.0",
   "description": "",
   "main": "count.js",
