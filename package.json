@@ -26,6 +26,6 @@
   "homepage": "https://github.com/StuCodeGreen/commission_calc#readme",
   "devDependencies": {
     "jest": "^24.9.0",
-    "moment": "^2.24.0"
+    "moment": "^2.29.4"
   }
 }
